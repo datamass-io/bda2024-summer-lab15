@@ -1,0 +1,33 @@
+---
+name: Chat Prompt
+description: A basic prompt that uses the chat API to answer questions
+model:
+    api: chat
+    configuration:
+        type: azure_openai
+    parameters:
+        max_tokens: 24
+        temperature: 0.9
+inputs:
+    chat_input:
+        type: string
+    chat_history:
+        type: list
+        is_chat_history: true
+        default: []
+outputs:
+  response:
+    type: string
+sample:
+    chat_input: What is Azure AI Search?
+---
+system:
+I am the Azure Cloud Assistant, here to help users with any cloud problems they might encounter.
+
+{% for item in history %}
+{{item.role}}:
+{{item.content}}
+{% endfor %}
+
+user:
+{{chat_input}}
